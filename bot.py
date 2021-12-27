@@ -1,6 +1,6 @@
 from selenium import webdriver
 from selenium.webdriver.common.action_chains import ActionChains
-import time
+
 
 
 user_data = {"Username":"user1", "Password": "pass1", "Name": "name1", "Credit card": "1234", "E-Mail": "mail1@e.com", "Phone number": "5678", "Address": "street1"}
@@ -49,7 +49,7 @@ class ControllerBot:
             if test_list[1] == True:
                print("Second Login Test: %s"%test_list[3])   
                if test_list[3] == False:
-                   print("Program didn't succeded on loggin in!")
+                   print("Program didn't succeded on loggin in after created the account!")
             else:
                 print("Program didn't succeded on creating account!")
         else:
@@ -75,7 +75,6 @@ class LoginBot:
         return could_login
         
     def login_test(self):
-        time.sleep(1)
         try:
             self.browser.find_element_by_xpath('//*[@id="globalNav"]/table/tbody/tr/td[2]/a')
             tester = True
@@ -100,7 +99,7 @@ class SignupBot:
         self.browser.find_element_by_name("upass").send_keys(user_data["Password"])
         self.browser.find_element_by_name("upass2").send_keys(user_data["Password"])
         self.browser.find_element_by_name("urname").send_keys(user_data["Name"])
-        self.browser.find_element_by_name("ucc").send_keys(user_data["Credit card"])
+        self.browser.find_element_by_name("ucc").send_keys(user_data["Credit card"]) 
         self.browser.find_element_by_name("uemail").send_keys(user_data["E-Mail"])
         self.browser.find_element_by_name("uphone").send_keys(user_data["Phone number"])
         self.browser.find_element_by_name("uaddress").send_keys(user_data["Address"])
@@ -117,11 +116,11 @@ class SignupBot:
 
     def check_data(self):
         counter = 0
-        for i in range(1,7,1):
+        for i in range(1,8,1):
             data = self.browser.find_element_by_xpath('//*[@id="content"]/ul/li[%i]'%(i)).text
             data_type = data.split(":")[0]
             data_value = data.split(" ")[-1]
-
+            #print(data_type, data_value, user_data[data_type])
             if data_value != user_data[data_type]:
                 counter = counter + 1
                 could_signup = False
@@ -142,3 +141,4 @@ class SignupBot:
 
 bot = ControllerBot()
 bot() 
+
